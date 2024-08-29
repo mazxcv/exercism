@@ -12,22 +12,16 @@ func Schedule(date string) time.Time {
 }
 
 // HasPassed returns whether a date has passed.
-func getDate(date string) time.Time {
-	t, _ := time.Parse("January 2, 2006 15:04:05", date)
-	return t
-}
 func HasPassed(date string) bool {
 	now := time.Now()
-	return now.After(getDate(date))
+	t, _ := time.Parse("January 2, 2006 15:04:05", date)
+	return now.After(t)
 }
 
 // IsAfternoonAppointment returns whether a time is in the afternoon.
-func getDate2(date string) time.Time {
-	t, _ := time.Parse("Monday, January 2, 2006 15:04:05", date)
-	return t
-}
 func IsAfternoonAppointment(date string) bool {
-	hour := getDate2(date).Hour()
+	t, _ := time.Parse("Monday, January 2, 2006 15:04:05", date)
+	hour := t.Hour()
 	return hour >= 12 && hour < 18
 }
 
