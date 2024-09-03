@@ -31,5 +31,10 @@ func (r *Resident) Delete() {
 
 // Count counts all residents that have provided the required information.
 func Count(residents []*Resident) int {
-	panic("Please implement Count.")
+	sum := 0
+	for _, r := range residents {
+		sum++
+	}
+
+	return sum
 }
