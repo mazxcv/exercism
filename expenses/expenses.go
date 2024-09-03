@@ -46,10 +46,11 @@ func ByCategory(c string) func(Record) bool {
 // TotalByPeriod returns total amount of expenses for records
 // inside the period p.
 func TotalByPeriod(in []Record, p DaysPeriod) float64 {
-	sum := 0
+	sum := 0.0
 	for _, v := range Filter(in, ByDaysPeriod(p)) {
-		sum += int(v.Amount)
+		sum += v.Amount
 	}
+	return sum
 }
 
 // CategoryExpenses returns total amount of expenses for records
