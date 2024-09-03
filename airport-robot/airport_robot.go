@@ -21,7 +21,7 @@ func (German) LanguageName() string {
 }
 
 func (German) Greet(visitorName string) string {
-	return fmt.Sprintf("Hallo %s!", visitorName)
+	return fmt.Sprintf("Hallo %s", visitorName)
 }
 
 type Italian struct{}
@@ -31,7 +31,7 @@ func (Italian) LanguageName() string {
 }
 
 func (Italian) Greet(visitorName string) string {
-	return fmt.Sprintf("Ciao %s!", visitorName)
+	return fmt.Sprintf("Ciao %s", visitorName)
 }
 
 type Portuguese struct{}
@@ -41,5 +41,5 @@ func (Portuguese) LanguageName() string {
 }
 
 func (Portuguese) Greet(visitorName string) string {
-	return fmt.Sprintf("Olá %s!", visitorName)
+	return fmt.Sprintf("Olá %s", visitorName)
 }
