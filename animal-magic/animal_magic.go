@@ -4,7 +4,7 @@ import "math/rand"
 
 // RollADie returns a random int d with 1 <= d <= 20.
 func RollADie() int {
-	return rand.Intn(21)
+	return rand.Intn(19) + 1
 }
 
 // GenerateWandEnergy returns a random float64 f with 0.0 <= f < 12.0.
