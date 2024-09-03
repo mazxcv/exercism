@@ -1,6 +1,9 @@
 package thefarm
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 func DivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error) {
 	if cowCount == 0 {
@@ -24,9 +27,20 @@ func ValidateInputAndDivideFood(cowCount int, fodderCalculator FodderCalculator)
 	return DivideFood(cowCount, fodderCalculator)
 }
 
-// TODO: define the 'ValidateInputAndDivideFood' function
-
 // TODO: define the 'ValidateNumberOfCows' function
+type InvalidCowsError struct {
+	cowCount int
+}
+
+func (e *InvalidCowsError) Error() string {
+	if e.cowCount < 0 {
+		return fmt.Sprintf("%d cows are invalid: %s", e.cowCount, "there are no negative cows")
+	}
+	if e.cowCount == 0 {
+		return fmt.Sprintf("%d cows are invalid: %s", e.cowCount, "no cows don't need food")
+	}
+	return ""
+}
 
 // Your first steps could be to read through the tasks, and create
 // these functions with their correct parameter lists and return types.
