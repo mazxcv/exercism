@@ -33,3 +33,13 @@ func (Italian) LanguageName() string {
 func (Italian) Greet(visitorName string) string {
 	return fmt.Sprintf("Ciao %s!", visitorName)
 }
+
+type Portuguese struct{}
+
+func (Portuguese) LanguageName() string {
+	return "Portuguese"
+}
+
+func (Portuguese) Greet(visitorName string) string {
+	return fmt.Sprintf("Olá %s!", visitorName)
+}
