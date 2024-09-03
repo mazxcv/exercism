@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func DivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error) {
+func DivideFood(fodderCalculator FodderCalculator, cowCount int) (float64, error) {
 	if cowCount == 0 {
 		return 0, errors.New("something went wrong")
 	}
@@ -17,14 +17,14 @@ func DivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error
 	if err != nil {
 		return 0, err
 	}
-	return fodderAmount * fatteningFactor, nil
+	return fodderAmount * fatteningFactor / float64(cowCount), nil
 }
 
-func ValidateInputAndDivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error) {
+func ValidateInputAndDivideFood(fodderCalculator FodderCalculator, cowCount int) (float64, error) {
 	if cowCount <= 0 {
 		return 0, errors.New("invalid number of cows")
 	}
-	return DivideFood(cowCount, fodderCalculator)
+	return DivideFood(fodderCalculator, cowCount)
 }
 
 // TODO: define the 'ValidateNumberOfCows' function
@@ -40,6 +40,16 @@ func (e *InvalidCowsError) Error() string {
 		return fmt.Sprintf("%d cows are invalid: %s", e.cowCount, "no cows don't need food")
 	}
 	return ""
+
+}
+
+func ValidateNumberOfCows(cowCount int) error {
+	if cowCount > 0 {
+		return nil
+	}
+	return &InvalidCowsError{
+		cowCount: cowCount,
+	}
 }
 
 // Your first steps could be to read through the tasks, and create
