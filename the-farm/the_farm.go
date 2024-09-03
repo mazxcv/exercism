@@ -2,10 +2,9 @@ package thefarm
 
 import "errors"
 
-// TODO: define the 'DivideFood' function
 func DivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error) {
-	if cowCount <= 0 {
-		return 0, errors.New("don't divide food by zero cow")
+	if cowCount == 0 {
+		return 0, errors.New("something went wrong")
 	}
 	fodderAmount, err := fodderCalculator.FodderAmount(cowCount)
 	if err != nil {
@@ -16,6 +15,13 @@ func DivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error
 		return 0, err
 	}
 	return fodderAmount * fatteningFactor, nil
+}
+
+func ValidateInputAndDivideFood(cowCount int, fodderCalculator FodderCalculator) (float64, error) {
+	if cowCount <= 0 {
+		return 0, errors.New("invalid number of cows")
+	}
+	return DivideFood(cowCount, fodderCalculator)
 }
 
 // TODO: define the 'ValidateInputAndDivideFood' function
