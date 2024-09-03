@@ -9,7 +9,6 @@ const (
 	Fahrenheit TemperatureUnit = 1
 )
 
-// Add a String method to the TemperatureUnit type
 func (t TemperatureUnit) String() string {
 	unit := []string{"°C", "°F"}
 	return unit[t]
@@ -20,7 +19,6 @@ type Temperature struct {
 	unit   TemperatureUnit
 }
 
-// Add a String method to the Temperature type
 func (t Temperature) String() string {
 	return fmt.Sprintf("%v %v", t.degree, t.unit)
 }
@@ -33,13 +31,19 @@ const (
 )
 
 // Add a String method to SpeedUnit
+func (t SpeedUnit) String() string {
+	unit := []string{"km/h", "mph"}
+	return unit[t]
+}
 
 type Speed struct {
 	magnitude int
 	unit      SpeedUnit
 }
 
-// Add a String method to Speed
+func (t Speed) String() string {
+	return fmt.Sprintf("%v %v", t.magnitude, t.unit)
+}
 
 type MeteorologyData struct {
 	location      string
