@@ -1,19 +1,22 @@
 package parsinglogfiles
 
-import "regexp"
+import (
+	"regexp"
+)
 
 func IsValidLine(text string) bool {
 	re := regexp.MustCompile(`^\[TRC\]|\[DBG\]|\[INF\]|\[WRN\]|\[ERR\]|\[FTL\]`)
-	return re.MatchString(text)
+	indexes := re.FindStringIndex(text)
+	return indexes != nil && indexes[0] == 0
 }
 
 func SplitLogLine(text string) []string {
-	re := regexp.MustCompile(`<[~*=-]+>`)
+	re := regexp.MustCompile(`<[~*=-]*>`)
 	return re.Split(text, -1)
 }
 
 func CountQuotedPasswords(lines []string) int {
-	re := regexp.MustCompile(`[pP]?[aA]?[sS]{2}[wW]?[oO]?[rR]?[dD]?`)
+	re := regexp.MustCompile(`[pP]{1}[aA]{1}[sS]{2}[wW]{1}[oO]{1}[rR]{1}[dD]{1}`)
 	sum := 0
 	for _, v := range lines {
 		if IsValidLine(v) {
@@ -37,7 +40,9 @@ func TagWithUserName(lines []string) []string {
 		if IsValidLine(v) {
 			user := re.FindStringSubmatch(v)
 			if user != nil {
-				logs = append(logs, "[USR] "+user[1]+v)
+				logs = append(logs, "[USR] "+user[1]+" "+v)
+			} else {
+				logs = append(logs, v)
 			}
 		}
 	}
