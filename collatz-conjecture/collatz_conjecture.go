@@ -1,26 +1,25 @@
 package collatzconjecture
 
 import (
-	"errors"
 	"fmt"
 )
 
-func CollatzConjecture(n int) (int, error) {
-	count := 0
+func CollatzConjecture(n int) (i int, err error) {
 	if n == 0 {
-		return 0, errors.New("zero value")
+		err = fmt.Errorf("zero value")
+		return
 	}
 	if n < 0 {
-		return 0, errors.New("negative value")
+		err = fmt.Errorf("negative value")
+		return
 	}
 	for n != 1 {
-		fmt.Println(count, n)
-		count++
+		i++
 		if n%2 == 0 {
 			n /= 2
 		} else {
 			n = 3*n + 1
 		}
 	}
-	return count, nil
+	return
 }
