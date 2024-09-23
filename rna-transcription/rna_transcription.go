@@ -13,7 +13,7 @@ func ToRNA(dna string) string {
 
 	var sb strings.Builder
 	sb.WriteString("")
-	for _, v := range []rune(dna) {
+	for _, v := range dna {
 		sb.WriteRune(dnaToRNA[v])
 	}
 
