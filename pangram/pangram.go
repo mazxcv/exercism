@@ -27,3 +27,14 @@ func IsPangram(input string) bool {
 	}
 	return len(keys) == 26
 }
+
+// // IsPangram checks if a phrase is a pangram
+// func IsPangram(s string) bool {
+// 	lookup := strings.ToLower(s)
+// 	for chr := 'a'; chr <= 'z'; chr++ {
+// 		if !strings.ContainsRune(lookup, chr) {
+// 			return false
+// 		}
+// 	}
+// 	return true
+// }
