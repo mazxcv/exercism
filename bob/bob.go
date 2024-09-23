@@ -2,35 +2,48 @@ package bob
 
 import "strings"
 
-// func  Hey imitated teenager answer
-func Hey(remark string) string {
-	remark = strings.TrimSpace(remark)
-	if len(remark) == 0 {
-		return "Fine. Be that way!"
-	}
+type Remark struct {
+	Remark string
+}
 
+func NewRemark(remark string) Remark {
+	return Remark{strings.TrimSpace(remark)}
+}
+
+func (r Remark) IsScream() bool {
 	maybeScream := false
 	for a := 'A'; a <= 'Z'; a++ {
-		if strings.ContainsRune(remark, a) {
+		if strings.ContainsRune(r.Remark, a) {
 			maybeScream = true
 			break
 		}
 	}
 
-	scream := strings.ToUpper(remark) == remark && maybeScream
-	question := remark[len(remark)-1] == '?'
+	return strings.ToUpper(r.Remark) == r.Remark && maybeScream
+}
 
-	if scream && question {
+func (r Remark) IsQuestion() bool {
+	return strings.HasSuffix(r.Remark, "?")
+}
+
+func (r Remark) isSilence() bool {
+	return r.Remark == ""
+}
+
+// func  Hey imitated teenager answer
+func Hey(remark string) string {
+	r := NewRemark(remark)
+
+	switch {
+	case r.isSilence():
+		return "Fine. Be that way!"
+	case r.IsScream() && r.IsQuestion():
 		return "Calm down, I know what I'm doing!"
-	}
-	if scream && !question {
+	case r.IsScream() && !r.IsQuestion():
 		return "Whoa, chill out!"
-	}
-
-	if !scream && question {
+	case r.IsQuestion():
 		return "Sure."
+	default:
+		return "Whatever."
 	}
-
-	return "Whatever."
-
 }
