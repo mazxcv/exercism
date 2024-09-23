@@ -18,6 +18,7 @@ func FactorAgePlanet() map[Planet]float64 {
 
 const OrbitalErathPeriod = 31557600
 
+// func Age calculate how old someone in planet
 func Age(seconds float64, planet Planet) float64 {
 	factor, ok := FactorAgePlanet()[planet]
 	if !ok {
