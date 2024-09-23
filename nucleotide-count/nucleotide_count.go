@@ -25,7 +25,7 @@ type DNA string
 // Here, the Counts method has a receiver of type DNA named d.
 func (d DNA) Counts() (Histogram, error) {
 	h := makeHistogram()
-	for _, v := range []rune(d) {
+	for _, v := range d {
 		switch v {
 		case 'A', 'C', 'G', 'T':
 			h[v]++
