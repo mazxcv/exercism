@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// func Valid determine id-card is valid per luhn-formula
 func Valid(id string) bool {
 	digits := []int{}
 
