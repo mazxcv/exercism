@@ -1,17 +1,29 @@
-// Package pangram is a small library for checking if a phrase is a pangram
 package pangram
 
 import (
+	"regexp"
 	"strings"
 )
 
-// IsPangram checks if a phrase is a pangram
+type Pangram map[string]int
+
+func makePangram() map[string]int {
+	return Pangram{}
+}
+
 func IsPangram(input string) bool {
-	lookup := strings.ToLower(input)
-	for i := 'a'; i <= 'z'; i++ {
-		if !strings.ContainsRune(lookup, i) {
-			return false
+	isWord := regexp.MustCompile(`[a-zA-Z]`)
+	pangram := makePangram()
+	for _, v := range strings.Split(strings.ToLower(input), "") {
+		if isWord.MatchString(v) {
+			pangram[v] = 1
 		}
 	}
-	return true
+
+	keys := make([]string, 0, len(pangram))
+
+	for k := range pangram {
+		keys = append(keys, k)
+	}
+	return len(keys) == 26
 }
