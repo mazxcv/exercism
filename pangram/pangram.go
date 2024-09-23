@@ -11,6 +11,7 @@ func makePangram() map[string]int {
 	return Pangram{}
 }
 
+// IsPangram checks if a phrase is a pangram
 func IsPangram(input string) bool {
 	isWord := regexp.MustCompile(`[a-zA-Z]`)
 	pangram := makePangram()
