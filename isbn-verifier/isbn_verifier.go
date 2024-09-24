@@ -9,7 +9,7 @@ func IsValidISBN(isbn string) bool {
 	acc := 0
 	m := 10
 
-	for _, v := range strings.Split(strings.Trim(isbn, "-"), "") {
+	for _, v := range strings.Split(isbn, "") {
 		x, err := strconv.Atoi(v)
 		if err != nil {
 			switch {
@@ -17,6 +17,8 @@ func IsValidISBN(isbn string) bool {
 				return false
 			case v == "X":
 				x = 10
+			case v == "-":
+				continue
 			default:
 				return false
 			}
