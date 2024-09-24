@@ -1,4 +1,4 @@
-// package proberb is a small library for generate stupid proverb
+// package proberb is a small library for generate  proverb
 package proverb
 
 import "fmt"
