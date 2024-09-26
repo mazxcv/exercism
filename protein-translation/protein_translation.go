@@ -1,3 +1,4 @@
+// Package protein has functionality to translate RNA sequences into proteins.
 package protein
 
 import (
@@ -5,55 +6,56 @@ import (
 )
 
 var (
-	ErrStop        = errors.New("unknow codon")
-	ErrInvalidBase = errors.New("invalid")
+	// ErrStop indicates the translation was stopped.
+	ErrStop = errors.New("stop")
+
+	// ErrInvalidBase indicates the codon was invalid.
+	ErrInvalidBase = errors.New("invalid codon")
+
+	noProteins = []string{}
 )
+
+const codonLength = 3
 
 // func FromRNA accept rna and return list of codon
 func FromRNA(rna string) ([]string, error) {
-	codons := []string{}
-	for i := 0; i <= len(rna)-3; i = i + 3 {
-		rna_string := rna[i : i+3]
+	proteins := []string{}
+	for i := 0; i < len(rna); i = i + codonLength {
+		rna_string := rna[i : i+codonLength]
 		codon, err := FromCodon(rna_string)
 		switch err {
 		case ErrStop:
-			return codons, nil
+			return proteins, nil
 		case ErrInvalidBase:
-			return codons, ErrInvalidBase
+			return noProteins, err
 		default:
-			codons = append(codons, codon)
+			proteins = append(proteins, codon)
 		}
 	}
 
-	return codons, nil
+	return proteins, nil
 }
 
-// func FromCodon accept codon and return protein
+// FromCodon either translates a codon to a protein or returns an error for a stop codon or invalid codon.
 func FromCodon(codon string) (protein string, err error) {
-	codonToProtein := map[string]string{
-		"AUG": "Methionine",
-		"UUU": "Phenylalanine",
-		"UUC": "Phenylalanine",
-		"UUA": "Leucine",
-		"UUG": "Leucine",
-		"UCU": "Serine",
-		"UCC": "Serine",
-		"UCA": "Serine",
-		"UCG": "Serine",
-		"UAU": "Tyrosine",
-		"UAC": "Tyrosine",
-		"UGU": "Cysteine",
-		"UGC": "Cysteine",
-		"UGG": "Tryptophan",
-		"UAA": "STOP",
-		"UAG": "STOP",
-		"UGA": "STOP",
-	}
-	protein, ok := codonToProtein[codon]
-	if protein == "STOP" {
+	switch codon {
+	case "AUG":
+		protein = "Methionine"
+	case "UUU", "UUC":
+		protein = "Phenylalanine"
+	case "UUA", "UUG":
+		protein = "Leucine"
+	case "UCU", "UCC", "UCA", "UCG":
+		protein = "Serine"
+	case "UAU", "UAC":
+		protein = "Tyrosine"
+	case "UGU", "UGC":
+		protein = "Cysteine"
+	case "UGG":
+		protein = "Tryptophan"
+	case "UAA", "UAG", "UGA":
 		err = ErrStop
-	}
-	if !ok {
+	default:
 		err = ErrInvalidBase
 	}
 	return
